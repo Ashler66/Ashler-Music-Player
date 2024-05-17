@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
+    <title>Ashler Music Player</title>
+    <style>
+      
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(to right, #26d0ce, #1a2980);
+            margin: 0;
+            padding: 0;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+        
+            position: relative;
+            overflow-y: scroll;
+         
+            scrollbar-width: 0;
+            
+           
+        }
+
+        /* Container styles */
+        .container {
+            max-width: 80%;
+            margin: 0 auto;
+            padding: 2%;
+        }
+
+        /* Header styles */
+        header {
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2vw;
+            color: #fff;
+        }
+
+        /* Navigation styles */
+        nav {
+            background: linear-gradient(112.1deg, #202639 11.4%, #3f4c77 70.2%);
+            padding: 0% 0;
+            margin-bottom: 1%;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .links {
+            display: flex;
+            align-items: center;
+            margin-left: 37.5%;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 0.5vw;
+            padding: 0.5vw 1vw;
+            font-size: 1.3vw;
+        }
+
+        /* Search bar styles */
+        .search-bar {
+            display: flex;
+            align-items: center;
+            border: 0.2vw solid #fff;
+            border-radius: 1.5vw;
+            padding: 0.3vw 1vw;
+            background-color: aliceblue;
+            width: 20%;
+        }
+
+        .search-bar input {
+            border: none;
+            background: transparent;
+            color: #121212;
+            outline: none;
+            width: 150%;
+        }
+
+        /* Main styles */
+        main {
+            padding: 2%;
+            text-align: center;
+            flex: 1;
+        }
+
+        /* Player styles */
+        .players {
+            max-width: 50%;
+            margin: 0 auto;
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 2%;
+        }
+
+        /* Footer styles */
+        footer {
+    background: linear-gradient(112.1deg, #202639 11.4%, #3f4c77 70.2%);
+    color: #fff;
+    text-align: center;
+    padding: 2% 0;
+    position: relative;
+}
+
+footer .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+        footer p {
+            margin: 0;
+            font-size: 1.4vw;
+        }
+
+       
+        .audio-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1vw;
+        }
+
+        .audio-controls button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 2vw;
+            color: #1DB954 !important; 
+            transition: color 0.3s ease;
+            border-radius: 50%;
+            width: 4vw;
+            height: 4vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .audio-controls button:hover {
+            color: #1ED760; /* Lighter shade of green on hover */
+            background-color: rgba(255, 255, 255, 0.1); 
+        }
+
+        p {
+            color: aliceblue;
+        }
+        #song_im{
+            width: 10%;
+            float: left;
+            margin-left: 5%;
+            height: 100%;
+        }
+
+        /* Slider styles */
+        .slider-container {
+            width: 80%;
+            margin: 0 auto;
+            margin-top: 1em;
+        }
+
+        .slider {
+            appearance: none;
+            width: 100%;
+            height: 0.5vw;
+            border-radius: 0.25vw;
+            background: linear-gradient(to top, #0ba360 0%, #3cba92 100%);;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 1.2vw;
+            height: 1.2vw;
+            border-radius: 50%;
+            background:radial-gradient(circle at 0% 0.5%, rgb(241, 241, 242) 0.1%, rgb(224, 226, 228) 100.2%);
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 1.2vw;
+            height: 1.2vw;
+            border-radius: 50%;
+            background:radial-gradient(circle at 0% 0.5%, rgb(241, 241, 242) 0.1%, rgb(224, 226, 228) 100.2%);
+            cursor: pointer;
+        }
+      .catalogue {
+      display: flex; /* Arrange images horizontally */
+      overflow-x: scroll; /* Enable horizontal scrolling */
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory; /* Enable snapping to images */
+      white-space: nowrap; /* Prevent line breaks within the container */
+      scrollbar-width: none;
+    }
+
+    .catalogue img {
+      scroll-snap-align: start; /* Snap each image to the viewport edge */
+      width: 10%; /* Adjust image width as needed */
+      height: auto; /* Maintain aspect ratio */
+      padding: 2%;
+      transform: scale(1); /* Reset any existing transform */
+      cursor: pointer;
+    }
+
+  
+        .catalogue :hover{
+            transform: scale(1.2);
+        }
+        .main{
+           padding:2%;
+        }
+     
+
+
+
+        
+/* CSS */
+
+
+/* CSS */
+.button-88 {
+  display: flex;
+  align-items: center;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 0.7em 1.4em 0.7em 1.1em;
+  color: white;
+  background: #ad5389;
+  background: linear-gradient(0deg, rgba(20,167,62,1) 0%, rgba(102,247,113,1) 100%);
+  border: none;
+  box-shadow: 0 0.7em 1.5em -0.5em #14a73e98;
+  letter-spacing: 0.05em;
+  border-radius: 20em;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-88:hover {
+  transform: scale(1.2);
+}
+
+.button-88:active {
+  box-shadow: 0 0.3em 1em -0.5em #14a73e98;
+}
+.button-89 {
+  display: flex;
+  align-items: center;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 0.7em 1.4em 0.7em 1.1em;
+  color: white;
+  background: #ad5389;
+  background-image:  linear-gradient(to bottom right, #FF512F, #DD2476);
+  border: none;
+  box-shadow: 0 0.7em 1.5em -0.5em #14a73e98;  
+  letter-spacing: 0.05em;
+  border-radius: 20em;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-89:hover {
+  transform: scale(1.2);
+}
+
+.button-89:active {
+  box-shadow: 0 0.3em 1em -0.5em #14a73e98;
+}
+
+
+.lyric {
+    font-size: auto;
+    font-weight: bolder;
+    line-height: 1.5;
+    text-align: center;
+    text-transform: uppercase;
+    
+    width: 30vw;
+    height: 20vh;
+    background-color: black;
+    color: goldenrod;
+    font-style: italic;
+    padding: 2vh 2vw;
+    border-radius: 1vw;
+    position: relative;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -40%);
+    z-index: 10; /* Ensure it sits above other content */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+
+    </style>
+</head>
+
+<body>
+   
+    <header>
+        <div class="container">
+            <h1>Ashler Music Player</h1>
+         
+        </div>
+    </header>
+    <nav>
+        <div class="container links">
+            <a href="{%url 'Home' %}">Home</a>
+            <a href="{%url 'Browse' %}">Browse</a>
+            <a href="{%url 'Library' %}">Library</a>
+
+        </div>
+        <div class="search-bar">
+            <form method="get" action="/autosearch">
+                <label for="autosearch"></label>
+                <input type="text" placeholder="Search..." name="autosearch" id="autosearch">
+            </form>
+        </div>
+    </nav>
+  
+    <main>
+        <div class="main">
+        <div class="container">
+            <div class="players">
+                <audio class="player" id="audio" src="/media/{{allsong2.0.song_link}}" controls style="visibility: hidden"></audio>
+            </div>
+        </div>
+        <div class="lyric">
+            <p style="color: goldenrod;"> ♫ LYRICS ♫
+               
+            </p>
+        </div>
+        <div class ="catalogue">
+    
+            {%for song in allsong%}
+            {% with myvar=song.id%}
+            {% if myvar == x %}    
+            <img  id="currsel"   src="/media/{{allsong2.0.song_image}}" style="transform: scale(1.5);" onclick="handleImageClick('{{ song.id }}')" onerror="this.style.display = 'none'">      
+    
+            {% else %}
+        <img src="/media/{{song.song_image}}"  onclick="handleImageClick('{{ song.id }}')">
+            {%endif%}
+            {% endwith %}
+
+
+
+
+            {%endfor%}
+        </div>
+    </div>
+    </main>
+    <footer>
+        <img src="/media/{{allsong2.0.song_image}}"  id="song_im" onerror="this.style.display = 'none'">
+        <div class="container">  
+            <div class="players"> <p class="song_text"> {{allsong2.0.song_name}} - {{allsong2.0.artist_name}}</p>
+            <div class="audio-controls">
+                <form method ="post" action="{% url 'bpre' %}"  name="bpre" id="bpre" >
+                    {% csrf_token %}
+                    {% for song in allsong %}
+                    <input type="hidden" name="bpre" value="{{ song }}">
+                    {% endfor %}
+                    {% for num in currel %}
+                    <input type="hidden" name="bnum2" value="{{ num }}">
+                    {% endfor %}
+                <button id="pr" type="submit">&#9198;</button> 
+            
+                </form>
+                <button id="ps">▶️</button>
+                <form method ="post" action="{% url 'bfwd' %}" id="bfwd" name="bfwd">
+                    {% csrf_token %}
+                    {% for song in allsong %}
+                    <input type="hidden" name="bfwd" value="{{ song }}">
+                    {% endfor %}
+                    {% for num in currel %}
+                    <input type="hidden" name="bnum" value="{{ num }}">
+                    {% endfor %}
+                    
+                <button id="nx" type="submit">&#9197;</button> 
+            
+                </form>
+            </div>
+            <div class="slider-container">
+                <input type="range" min="0" max="100" value="0" class="slider" id="progressSlider">
+            </div>
+        </div>
+        {% if y == 0 %}
+        <button class="button-88" role="button" id="addlib" data-song-id="{{ allsong2.0.id }}">Add To Library</button>
+        {% else %}
+        <button class="button-89" role="button" id="addlib" data-song-id="{{ allsong2.0.id }}" >Remove From Library</button>
+        {% endif %}
+
+        </div>
+    </footer>
+   
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
+    <script>
+      $(document).ready(function(){
+    var audio = document.getElementById("audio");
+    var slider = document.getElementById("progressSlider");
+    var animationFrameId;
+
+    function updateSlider() {
+        slider.value = (audio.currentTime / audio.duration) * 100;
+        animationFrameId = requestAnimationFrame(updateSlider);
+    }
+
+    audio.addEventListener("play", function() {
+        animationFrameId = requestAnimationFrame(updateSlider);
+        $("#ps").text("⏸️"); 
+    });
+
+    audio.addEventListener("pause", function() {
+        cancelAnimationFrame(animationFrameId);
+        $("#ps").text("▶️"); 
+    });
+
+    audio.addEventListener("ended", function() {
+        cancelAnimationFrame(animationFrameId);
+        $("#ps").text("▶️");
+        $("#nx").click(); 
+    });
+
+    slider.addEventListener("input", function() {
+        
+        audio.currentTime = (slider.value * audio.duration) / 100;
+        console.log(slider.value);
+       var x= ((slider.value * audio.duration) / 100);
+       console.log(x);
+       audio.currentTime=x;
+        console.log(audio.currentTime);
+
+    });
+
+    $("#ps").click(function(){
+        if (audio.paused) {
+            audio.play();
+            $(this).text("⏸️"); 
+        } else {
+            audio.pause();
+            $(this).text("▶️"); 
+        }
+    });
+
+ 
+    if (audio.paused) {
+        audio.play();
+    }
+});
+
+
+document.addEventListener('DOMContentLoaded', function () {
+            const audio = document.getElementById('audio');
+            const playPauseBtn = document.getElementById('playPauseBtn');
+            const slider = document.getElementById('slider');
+            
+            playPauseBtn.addEventListener('click', function () {
+                if (audio.paused) {
+                    audio.play();
+                } else {
+                    audio.pause();
+                }
+            });
+
+            audio.addEventListener('play', function () {
+                playPauseBtn.textContent = '⏸️';
+            });
+
+            audio.addEventListener('pause', function () {
+                playPauseBtn.textContent = '▶️';
+            });
+
+            audio.addEventListener('timeupdate', function () {
+                const value = (audio.currentTime / audio.duration) * 100;
+                slider.value = value;
+            });
+
+            slider.addEventListener('input', function () {
+                const value = slider.value;
+                audio.currentTime = (value / 100) * audio.duration;
+            });
+        });
+</script>
+<script>
+$(document).ready(function() {
+    $('#addlib').click(function() {
+        var songId = $(this).data('song-id');
+        $.ajax({
+            url: "{% url 'AddToLib' %}",  // URL of the Django view
+            type: 'POST',  // HTTP method
+            data: {
+              'song_id':songId 
+            },
+            beforeSend: function(xhr, settings) {
+                // Get CSRF token from cookies
+                var csrftoken = getCookie('csrftoken');
+                
+                // Include CSRF token in headers
+                xhr.setRequestHeader('X-CSRFToken', csrftoken);
+            },
+            success: function(response) {
+                // Handle the response from the backend (if needed)
+                console.log('Data sent successfully');
+            },
+            error: function(xhr, status, error) {
+                // Handle errors (if any)
+                console.error('Error sending data:', error);
+            }
+        });
+    });
+});
+
+
+
+</script>
+
+  
+
+
+
+    
+    
+    <script>
+        $(function() {
+            $("#autosearch").autocomplete({
+                source: "{%url 'autosearch' %}"
+            });
+        });
+    </script>
+    <script>
+        window.onload = function() {
+          const elementToFocus = document.querySelector('#currsel');
+          const catalogue = document.querySelector('.catalogue');
+      
+          if (elementToFocus) {
+            const elementPosition = elementToFocus.getBoundingClientRect().left;
+            catalogue.scrollLeft = elementPosition;
+          }
+        };
+
+
+        function handleImageClick(songId) {
+            // Create a form element
+            var form = document.createElement("form");
+            form.method = "POST";
+            form.action = "{% url 'imsel' %}"; // Replace 'your_django_view_name' with the actual name of your Django view
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            const hiddenField = document.createElement("input");
+    hiddenField.type = "hidden";
+    hiddenField.name = "csrfmiddlewaretoken";
+    hiddenField.value = csrfToken;
+    form.appendChild(hiddenField);
+            // Create an input element to hold the song ID
+            var input = document.createElement("input");
+            input.type = "hidden";
+            input.name = "imsel";
+            input.value = songId;
+
+            // Append the input element to the form
+            form.appendChild(input);
+
+            // Append the form to the document body and submit it
+            document.body.appendChild(form);
+            form.submit();
+        }
+
+
+        function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+
+
+var xButtons = document.getElementsByClassName("button-88");
+var yButtons = document.getElementsByClassName("button-89");
+
+// Function to toggle between classes and change text content
+function toggleClassAndText(buttons, originalClass, newClass) {
+    // Loop through all buttons and add event listeners to each
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener("click", function() {
+            // Toggle classes
+            this.classList.toggle(originalClass);
+            this.classList.toggle(newClass);
+
+            // Toggle text content
+            if (this.classList.contains("button-88")) {
+                this.textContent = "Add to Library"; // Change this to the actual original text
+            } else {
+                this.textContent = "Remove From Library"; // Change this to the actual new text
+            }
+        });
+    }
+}
+
+// Toggle class and text for buttons with class "x"
+toggleClassAndText(xButtons, "button-88", "button-89");
+
+// Toggle class and text for buttons with class "y"
+toggleClassAndText(yButtons, "button-89", "button-88");
+
+
+
+
+
+
+
+
+      </script>
+
+
+<script>
+    
+    function parseLyric(lrc) {
+    // will match "[00:00.00] ooooh yeah!"
+    // note: i use named capturing group
+    const regex = /^\[(?<time>\d{2}:\d{2}(.\d{2})?)\](?<text>.*)/;
+
+    // split lrc string to individual lines
+    const lines = lrc.split("\n");
+
+    const output = [];
+
+    lines.forEach(line => {
+        const match = line.match(regex);
+
+        // if doesn't match, return.
+        if (match == null) return;
+
+        const { time, text } = match.groups;
+
+        output.push({
+            time: parseTime(time),
+            text: text.trim()
+        });
+    });
+
+    // parse formated time
+    // "03:24.73" => 204.73 (total time in seconds)
+    function parseTime(time) {
+        const minsec = time.split(":");
+
+        const min = parseInt(minsec[0]) * 60;
+        const sec = parseFloat(minsec[1]);
+
+        return min + sec;
+    }
+
+    return output;
+}
+function syncLyric(lyrics, time) {
+    const scores = [];
+
+    lyrics.forEach(lyric => {
+        // get the gap or distance or we call it score
+        const score = time - lyric.time;
+
+        // only accept score with positive values
+        if (score >= 0) scores.push(score);
+    });
+
+    if (scores.length == 0) return null;
+
+    // get the smallest value from scores
+    const closest = Math.min(...scores);
+
+    // return the index of closest lyric
+    return scores.indexOf(closest);
+}
+!async function main() {
+    "use strict";
+  console.log("hello")
+    const dom = {
+        lyric: document.querySelector(".lyric"),
+        player: document.querySelector(".player")
+    };
+
+    // load lrc file
+    const res = await fetch("/media/{{allsong2.0.song_lyric}}");
+    const lrc = await res.text();
+
+    const lyrics = parseLyric(lrc);
+
+   
+
+    dom.player.ontimeupdate = () => {
+        const time = dom.player.currentTime;
+        const index = syncLyric(lyrics, time);
+
+        if (index == null) return;
+
+        dom.lyric.innerHTML = lyrics[index].text;
+    };
+
+}();
+
+
+</script>
+
+   
+ 
+</body>
+
+</html>

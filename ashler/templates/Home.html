@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
+    <title style="color: burlywood;">Ashler Music Player</title>
+    <style>
+        body {
+            background-image: url("{% static 'Homeback.jpg' %}");
+            font-family: 'Nunito', sans-serif;
+       background-size: 225vh;
+            margin: 0;
+            padding: 0;
+           color:black;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Container styles */
+        .container {
+            max-width: 80%;
+            margin: 0 auto;
+            padding: 2%;
+        }
+
+        /* Header styles */
+        header {
+            text-align: center;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2vw;
+            color: #fff;
+        }
+
+        /* Navigation styles */
+        nav {
+            background: linear-gradient(112.1deg, #202639 11.4%, #3f4c77 70.2%);
+            padding: 0% 0;
+            margin-bottom: 1%;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .links {
+            display: flex;
+            align-items: center;
+            margin-left: 37.5%;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 0.5vw;
+            padding: 0.5vw 1vw;
+            font-size: 1.3vw;
+        }
+
+        /* Search bar styles */
+        .search-bar {
+            display: flex;
+            align-items: center;
+            border: 0.2vw solid #fff;
+            border-radius: 1.5vw;
+            padding: 0.3vw 1vw;
+            background-color: aliceblue;
+            width: 20%;
+        }
+
+        .search-bar input {
+            border: none;
+            background: transparent;
+            color: #121212;
+            outline: none;
+            width: 150%;
+        }
+
+        /* Main styles */
+        main {
+            padding: 2%;
+            text-align: center;
+            flex: 1;
+        }
+
+        /* Player styles */
+        .player {
+            max-width: 50%;
+            margin: 0 auto;
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 2%;
+        }
+
+        /* Footer styles */
+        footer {
+    background: linear-gradient(112.1deg, #202639 11.4%, #3f4c77 70.2%);
+    color: #fff;
+    text-align: center;
+    padding: 2% 0;
+    position: relative;
+}
+
+footer .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+        footer p {
+            margin: 0;
+            font-size: 1.4vw;
+        }
+
+       
+        .audio-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1vw;
+        }
+
+        .audio-controls button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 2vw;
+            color: #1DB954 !important; /* Spotify green */
+            transition: color 0.3s ease;
+            border-radius: 50%;
+            width: 4vw;
+            height: 4vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .audio-controls button:hover {
+            color: #1ED760; /* Lighter shade of green on hover */
+            background-color: rgba(255, 255, 255, 0.1); 
+        }
+
+        p {
+            color :black;
+        }
+        #song_im{
+            width: 10%;
+            float: left;
+            margin-left: 5%;
+            height: 100%;
+        }
+
+        /* Slider styles */
+        .slider-container {
+            width: 80%;
+            margin: 0 auto;
+            margin-top: 1em;
+        }
+
+        .slider {
+            appearance: none;
+            width: 100%;
+            height: 0.5vw;
+            border-radius: 0.25vw;
+            background: linear-gradient(to top, #0ba360 0%, #3cba92 100%);;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 1.2vw;
+            height: 1.2vw;
+            border-radius: 50%;
+            background:radial-gradient(circle at 0% 0.5%, rgb(241, 241, 242) 0.1%, rgb(224, 226, 228) 100.2%);
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 1.2vw;
+            height: 1.2vw;
+            border-radius: 50%;
+            background:radial-gradient(circle at 0% 0.5%, rgb(241, 241, 242) 0.1%, rgb(224, 226, 228) 100.2%);
+            cursor: pointer;
+        }
+  
+.button-88 {
+  display: flex;
+  align-items: center;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 0.7em 1.4em 0.7em 1.1em;
+  color: white;
+  background: #ad5389;
+  background: linear-gradient(0deg, rgba(20,167,62,1) 0%, rgba(102,247,113,1) 100%);
+  border: none;
+  box-shadow: 0 0.7em 1.5em -0.5em #14a73e98;
+  letter-spacing: 0.05em;
+  border-radius: 20em;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-88:hover {
+  transform: scale(1.2);
+}
+
+.button-88:active {
+  box-shadow: 0 0.3em 1em -0.5em #14a73e98;
+}
+.button-89 {
+  display: flex;
+  align-items: center;
+  font-family: inherit;
+  font-weight: 500;
+  font-size: 16px;
+  padding: 0.7em 1.4em 0.7em 1.1em;
+  color: white;
+  background: #ad5389;
+  background-image:  linear-gradient(to bottom right, #FF512F, #DD2476);
+  border: none;
+  box-shadow: 0 0.7em 1.5em -0.5em #14a73e98;  
+  letter-spacing: 0.05em;
+  border-radius: 20em;
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-89:hover {
+  transform: scale(1.2);
+}
+
+.button-89:active {
+  box-shadow: 0 0.3em 1em -0.5em #14a73e98;
+}
+.ppt{
+    color: goldenrod;
+}
+  
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Ashler Music Player</h1>
+        </div>
+    </header>
+    <nav>
+        <div class="container links">
+            <a href="{%url 'Home' %}">Home</a>
+            <a href="{%url 'Browse' %}">Browse</a>
+      
+            <a href="{%url 'Library' %}">Library</a>
+        </div>
+        <div class="search-bar">
+            <form method="get" action="/autosearch">
+                <label for="autosearch"></label>
+                <input type="text" placeholder="Search..." name="autosearch" id="autosearch">
+            </form>
+        </div>
+    </nav>
+    <main>
+        <div class="container">
+            <div class="player">
+                <audio id="audio" src="/media/{{song.song_link}}" controls style="visibility: hidden"></audio>
+                <h1 style="color: goldenrod;">Welcome to Ashler Music Player!</h1>
+               
+                <p class="ppt">Best of songs at your fingertips. Start exploring now and discover new music you'll love.</p>
+            </div>
+        </div>
+    </main>
+   
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
+    <script>
+        console.log(x)
+        $(document).ready(function(){
+            var audio = document.getElementById("audio");
+            var slider = document.getElementById("progressSlider");
+            var animationFrameId;
+    
+            function updateSlider() {
+                slider.value = (audio.currentTime / audio.duration) * 100;
+                animationFrameId = requestAnimationFrame(updateSlider);
+            }
+    
+            audio.addEventListener("play", function() {
+                animationFrameId = requestAnimationFrame(updateSlider);
+                $("#ps").text("⏸️"); 
+            });
+    
+            audio.addEventListener("pause", function() {
+                cancelAnimationFrame(animationFrameId);
+                $("#ps").text("▶️"); 
+            });
+    
+            audio.addEventListener("ended", function() {
+                cancelAnimationFrame(animationFrameId);
+                $("#ps").text("▶️"); 
+            });
+    
+            slider.addEventListener("input", function() {
+                audio.currentTime = (slider.value * audio.duration) / 100;
+            });
+    
+            $("#ps").click(function(){
+                if (audio.paused) {
+                    audio.play();
+                    $(this).text("⏸️"); 
+                } else {
+                    audio.pause();
+                    $(this).text("▶️"); 
+                }
+            });
+        });
+
+
+
+        var xButtons = document.getElementsByClassName("button-88");
+var yButtons = document.getElementsByClassName("button-89");
+
+// Function to toggle between classes and change text content
+function toggleClassAndText(buttons, originalClass, newClass) {
+    // Loop through all buttons and add event listeners to each
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener("click", function() {
+            // Toggle classes
+            this.classList.toggle(originalClass);
+            this.classList.toggle(newClass);
+
+            // Toggle text content
+            if (this.classList.contains("button-88")) {
+                this.textContent = "Add to Library"; // Change this to the actual original text
+            } else {
+                this.textContent = "Remove From Library"; // Change this to the actual new text
+            }
+        });
+    }
+}
+
+// Toggle class and text for buttons with class "x"
+toggleClassAndText(xButtons, "button-88", "button-89");
+
+// Toggle class and text for buttons with class "y"
+toggleClassAndText(yButtons, "button-89", "button-88");
+
+    </script>
+     <script>
+        $(document).ready(function() {
+            $('#addlib').click(function() {
+                var songId = $(this).data('song-id');
+                $.ajax({
+                    url: "{% url 'AddToLib' %}",  // URL of the Django view
+                    type: 'POST',  // HTTP method
+                    data: {
+                      'song_id':songId 
+                    },
+                    beforeSend: function(xhr, settings) {
+                        // Get CSRF token from cookies
+                        var csrftoken = getCookie('csrftoken');
+                        
+                        // Include CSRF token in headers
+                        xhr.setRequestHeader('X-CSRFToken', csrftoken);
+                    },
+                    success: function(response) {
+                        // Handle the response from the backend (if needed)
+                        console.log('Data sent successfully');
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle errors (if any)
+                        console.error('Error sending data:', error);
+                    }
+                });
+            });
+        });
+        function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+        
+        </script>
+    
+    <script>
+        $(function() {
+            $("#autosearch").autocomplete({
+                source: "{%url 'autosearch' %}"
+            });
+        });
+    </script>
+ 
+</body>
+</html>
